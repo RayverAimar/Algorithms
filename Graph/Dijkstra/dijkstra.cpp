@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+
+#define INF 1e9
+
+namespace graph{
+
+void InsEdge(vector<vector<pair<int,int>>> &nodes, int start, int end, int weight){
+    nodes[start].push_back(make_pair(end, weight));
+    nodes[end].push_back(make_pair(start, weight));
+}
+
+void dijkstra(vector<vector<pair<int,int>>> &nodes, int start, int end){
+    int N = nodes.size();
+    vector<int> dist(N, INF);
+    vector<bool> visited(N, 0);
+    priority_queue<pair<int,int>, vector<pair<int,int>>, greater<pair<int, int>>> pq;
+    dist[start] = 0;
+    pq.push(make_pair(0,start));
+    while(!pq.empty()){
+        int cur_node = pq.top().second;
+        pq.pop();
+        if(visited[cur_node]) continue;
+        visited[cur_node] = 1;
+        for(auto edge : nodes[cur_node]){
+            if(dist[cur_node] + edge.second < dist[edge.first]){
+                dist[edge.first] = dist[cur_node] + edge.second;
+                pq.push(make_pair(dist[edge.first], edge.first));
+            }
+        }
+    }
+    cout << "Shortest distance from "<< ++start <<" to "<< end + 1 <<" is "<<dist[end]<<"\n";
+} //dijkstra
+
+} //namespace graph
+
+int main(){
+    int n_vertex, n_edges, a, b;
+    cin>>n_vertex>>n_edges;
+    vector<vector<pair<int, int>>> nodes(n_vertex, vector<pair<int, int>>());
+    while(n_edges--){
+        int start, end, weight;
+        cin>>start>>end>>weight;
+        graph::InsEdge(nodes, --start, --end, weight);
+    }
+    cin>>a>>b;
+    graph::dijkstra(nodes, --a, --b);
+}
