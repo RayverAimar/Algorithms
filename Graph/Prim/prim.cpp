@@ -10,6 +10,7 @@ void prim(vector<vector<pair<int, int>>>& graph, int start){
     size_t N = graph.size();
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
     vector<bool> visited(N, 0);
+    vector<int> path;
     int cost{0};
     pq.push({cost, --start});
     while(!pq.empty()){
@@ -19,11 +20,14 @@ void prim(vector<vector<pair<int, int>>>& graph, int start){
         if(visited[cur_node]) continue;
         visited[cur_node] = true;
         cost += cur_dist;
+        path.push_back(cur_node);
         for(auto neighbour : graph[cur_node]){
             if(!visited[neighbour.second]) pq.push(neighbour);
         }
     }
     cout << "MST's weight from node "<< ++start << " is: "<<cost<<"\n";
+    cout << "Path for MST from node "<< start << " is: ";
+    for(int i = 0; i < N; i++) cout << path[i] + 1 <<" ";
 }
 
 int main(){
