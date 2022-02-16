@@ -11,16 +11,14 @@ size_t starting_node, N;
 
 int get_distance(int a, int b){
     int start{1}, end{1};
-    for(int i = 0; i < 4; i++){
-        start <<= i;
-        if(start == a){
+    for(int i = 0; i < N; i++){
+        if(start << i == a){
             start = i;
             break;
         }
     }
-    for(int i = 0; i < 4; i++){
-        end <<= i;
-        if(end == b){
+    for(int i = 0; i < N; i++){
+        if(end << i == b){
             end = i;
             break;
         }
@@ -33,13 +31,13 @@ int TSP(int cur_node, int to_visit){
     if(!to_visit){
         return get_distance(cur_node, starting_node);
     }
-    for(int i = 0; i < 4; i++){
-        int f = 1 << i; //0001 0010 0100 1000
-        cost = min(cost, get_distance(cur_node, f) + TSP(f, to_visit ^ f));
+    for(int i = 0; i < N; i++){
+        int not_visited = 1 << i;
+        if(not_visited & to_visit)
+            cost = min(cost, get_distance(cur_node, not_visited) + TSP(not_visited, to_visit ^ not_visited));
     }
     return cost;
 }
-
 
 int main(){
     cin >> N;
@@ -47,10 +45,10 @@ int main(){
     int n_edges = N * N;
     while(n_edges--){
         size_t start, end, weight;
-        start--, end--;
         cin >> start >> end >> weight;
+        start--, end--;
+        distances[start][end] = weight;
     }
     cin >> starting_node;
-    cout<<TSP(starting_node, 7); //0001 - 0111;
-    
+    cout << TSP(1 << (starting_node - 1), 14);
 }
