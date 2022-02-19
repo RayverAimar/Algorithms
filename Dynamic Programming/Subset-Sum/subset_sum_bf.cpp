@@ -17,7 +17,7 @@ bool subset_sum(vector<ll> arr, ll sum) {
     if (sum < min_sum || sum > max_sum) return 0;
     FORN(bm, 1, 1<<n) {
         ll ans{ sum };
-        FORN(i, 0, 4) if (bm & 1 << i) ans -= arr[i];
+        FORN(i, 0, n) if (bm & 1 << i) ans -= arr[i];
         if (!ans) return 1;
     }
     return 0;
