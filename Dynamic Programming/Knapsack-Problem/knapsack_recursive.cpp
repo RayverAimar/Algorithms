@@ -24,11 +24,12 @@ int knapsack(int i, int W){
 int main(){
     tt{
         cin>>n;
-        weight = profit = vector<int>(n);
+        weight.resize(n); profit.resize(n);
         FORN(i,0,n) cin>>weight[i];
         FORN(i,0,n) cin>>profit[i];
         int total_weight;
         cin>>total_weight;
-        cout<<knapsack(0,total_weight);
+        cout<<knapsack(0,total_weight)<<endl;
+        weight.clear(); profit.clear();
     }
 }
