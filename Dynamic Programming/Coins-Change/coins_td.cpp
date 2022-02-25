@@ -12,11 +12,9 @@ int dp[ms];
 int coins(int n){
     if(dp[n]<0){
         dp[n] = INF;
-        for(int e : change){
-            int ans=INF; 
-            if(n-e>=0) ans = 1 + coins(n-e);
-            if(ans<dp[n]) dp[n] = ans;
-        }
+        for(int e : change)
+            if(n-e>=0)
+                dp[n] = min(dp[n], 1 + coins(n-e));
     }
     return dp[n];
 }
