@@ -10,12 +10,10 @@ vector<int> change;
 int coins(int n){
     if (n < 0) return INF;
     if (!n) return n;
-    int min = INF;
-    for(int e : change){
-        int ans = 1 + coins(n-e);
-        if(min>ans) min = ans;
-    }
-    return min;
+    int ans = INF;
+    for(int e : change)
+        ans =  min(ans, 1 + coins(n-e));
+    return ans;
 }
 
 int main(){
