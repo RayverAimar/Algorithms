@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #define tt int testcase; cin>>testcase; while(testcase--)
 #define FORN(i,m,n) for(int i = m; i < n; i++)
@@ -26,7 +27,7 @@ int main(){
     tt{
         size_t n_nodes;
         cin>>n_nodes;
-        adj=vector<vector<int>>(n_nodes-1, vector<int>());
+        adj=vector<vector<int>>(n_nodes+1, vector<int>());
         FORN(i,0,n_nodes-1){
             size_t start, end;
             cin>>start>>end;
@@ -35,7 +36,7 @@ int main(){
         }
         visited = vector<bool>(n_nodes+1, 0);
         dp=vector<int>(n_nodes+1, 0);
-        dfs(1);
-        cout<<dp[1];
+        dfs(2);
+        cout<<dp[2];
     }
 }
